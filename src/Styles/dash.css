@@ -1,0 +1,211 @@
+.dashboard-admin {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    background-color: #f5f7fa;
+    padding: 20px;
+  }
+  
+  .text-container {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .text-container h2 {
+    color: #205072;
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .text-container p {
+    color: #6c757d;
+    font-size: 1.1rem;
+  }
+  
+  #card-area {
+    background-color: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    max-width: 1200px;
+  }
+  
+  .big {
+    color: #205072;
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .wrapper {
+    padding: 0 5%;
+  }
+  
+  .box-area {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 30px;
+    margin-top: 20px;
+  }
+  
+  .box {
+    flex: 1;
+    min-width: 250px;
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    height: 300px;
+  }
+  
+  .box:hover {
+    transform: translateY(-10px);
+  }
+  
+  .box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s;
+  }
+  
+  .overlay {
+    height: 0;
+    width: 100%;
+    background: linear-gradient(transparent, rgba(32, 80, 114, 0.9) 70%);
+    border-radius: 15px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 20px;
+    text-align: center;
+    transition: height 0.5s;
+  }
+  
+  .overlay h3 {
+    font-weight: 600;
+    margin-bottom: 10px;
+    margin-top: 0;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    color: white;
+  }
+  
+  .overlay p {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+  }
+  
+  .overlay button {
+    width: 160px;
+    padding: 10px 0;
+    text-align: center;
+    border-radius: 25px;
+    font-weight: 600;
+    border: 2px solid white;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+  }
+  
+  .overlay button:hover {
+    background: white;
+    color: #205072;
+  }
+  
+  .box:hover img {
+    transform: scale(1.1);
+  }
+  
+  .box:hover .overlay {
+    height: 100%;
+  }
+  
+  .logoutbtn {
+    width: 200px;
+    padding: 12px 0;
+    text-align: center;
+    border-radius: 25px;
+    font-weight: 600;
+    border: 2px solid #205072;
+    color: #205072;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: none;
+    margin: 40px auto 20px;
+    display: block;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .logoutbtn:hover {
+    background: #205072;
+    color: white;
+    border-color: #205072;
+  }
+  
+  .spann {
+    background: #205072;
+    height: 100%;
+    width: 0;
+    border-radius: 25px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    transition: 0.5s;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .box-area {
+      gap: 20px;
+    }
+  }
+  
+  @media (max-width: 900px) {
+    .box-area {
+      flex-wrap: wrap;
+    }
+    
+    .box {
+      min-width: calc(50% - 15px);
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .dashboard-admin {
+      padding: 15px;
+    }
+    
+    #card-area {
+      padding: 20px;
+    }
+    
+    .box {
+      min-width: 100%;
+    }
+    
+    .text-container h2 {
+      font-size: 1.8rem;
+    }
+    
+    .big {
+      font-size: 1.5rem;
+    }
+    
+    .logoutbtn {
+      width: 180px;
+    }
+  }
