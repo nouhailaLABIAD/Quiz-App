@@ -4,7 +4,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { QuestionController } from './question.controller';
 import { QuestionService } from './question.service';
 import { QuestionSchema } from './schemas/question.schema';
-import { ReponseSchema } from './schemas/reponse.schema';
 
 
 @Module({
@@ -12,7 +11,6 @@ import { ReponseSchema } from './schemas/reponse.schema';
     // Enregistrement des modèles Question et Reponse
     MongooseModule.forFeature([
       { name: 'Question', schema: QuestionSchema },
-      { name: 'Reponse', schema: ReponseSchema },
     ]),
   ],
   providers: [QuestionService],

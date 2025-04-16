@@ -25,14 +25,12 @@ const QuestionList = () => {
   }, [quizId]);
 
   const handleDelete = async (questionId) => {
-    if (window.confirm("Êtes-vous sûr de vouloir supprimer cette question ?")) {
       try {
         await axios.delete(`http://localhost:3001/questions/${questionId}`);
         setQuestions(questions.filter((q) => q._id !== questionId));
       } catch (error) {
         console.error("Erreur lors de la suppression de la question");
       }
-    }
   };
 
   return (
@@ -60,54 +58,57 @@ const QuestionList = () => {
             <div className="header-cell actions">Actions</div>
           </div>
 
-          {questions.length > 0 ? (
-            questions.map((question) => (
-              <div className="table-row" key={question._id}>
-                <div className="table-cell">
-                  <strong>{question.text}</strong>
+          <div className="table-rows-container">
+            {questions.length > 0 ? (
+              questions.map((question) => (
+                <div className="table-row" key={question._id}>
+                  <div className="table-cell">
+                    <strong>{question.text}</strong>
+                  </div>
+                  <div className="table-cell">
+                    <ul className="choices-list">
+                      {question.choices.map((choice, index) => (
+                        <li 
+                          key={index} 
+                          className={`choice-item ${choice === question.correctAnswer ? 'correct' : ''}`}
+                        >
+                          {choice}
+                          {choice === question.correctAnswer && ' ✅'}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="table-cell actions">
+                    <button 
+                      className="action-btn edit"
+                      onClick={() => navigate(`/dashboardAdmin/quiz/${quizId}/edit-question/${question._id}`)}
+                    >
+                      <FiEdit2 className="icon" />
+                    </button>
+                    <button 
+                      className="action-btn delete"
+                      onClick={() => handleDelete(question._id)}
+                    >
+                      <FiTrash2 className="icon" />
+                    </button>
+                  </div>
                 </div>
-                <div className="table-cell">
-                  <ul className="choices-list">
-                    {question.choices.map((choice, index) => (
-                      <li 
-                        key={index} 
-                        className={`choice-item ${choice === question.correctAnswer ? 'correct' : ''}`}
-                      >
-                        {choice}
-                        {choice === question.correctAnswer && ' ✅'}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="table-cell actions">
-                  <button 
-                    className="action-btn edit"
-                    onClick={() => navigate(`/dashboardAdmin/quiz/${quizId}/edit-question/${question._id}`)}
-                  >
-                    <FiEdit2 className="icon" />
-                  </button>
-                  <button 
-                    className="action-btn delete"
-                    onClick={() => handleDelete(question._id)}
-                  >
-                    <FiTrash2 className="icon" />
-                  </button>
-                </div>
+              ))
+            ) : (
+              <div className="empty-state">
+                Aucune question disponible. Créez-en une nouvelle !
               </div>
-            ))
-          ) : (
-            <div className="empty-state">
-              Aucune question disponible. Créez-en une nouvelle !
-            </div>
-          )}
+            )}
+          </div>
         </div>
       )}
 
       <style jsx>{`
         .quiz-list-container {
           padding: 2rem;
-          max-width: 1200px;
-          margin: 0 auto;
+          width: 100%;
+          height: 100vh;
+          box-sizing: border-box;
           font-family: 'Inter', sans-serif;
         }
         
@@ -117,7 +118,6 @@ const QuestionList = () => {
           align-items: center;
           margin-bottom: 2rem;
           gap: 1rem;
-          flex-wrap: wrap;
         }
         
         h1 {
@@ -171,6 +171,9 @@ const QuestionList = () => {
           border-radius: 12px;
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
           overflow: hidden;
+          height: calc(100vh - 180px);
+          display: flex;
+          flex-direction: column;
         }
         
         .table-header {
@@ -181,12 +184,18 @@ const QuestionList = () => {
           font-weight: 600;
           color: #4a5568;
           border-bottom: 1px solid #e2e8f0;
+          flex-shrink: 0;
+        }
+        
+        .table-rows-container {
+          overflow-y: auto;
+          flex-grow: 1;
         }
         
         .table-row {
           display: grid;
           grid-template-columns: 2fr 3fr 1fr;
-          padding: 1.5rem;
+          padding: 1rem 1.5rem;
           align-items: center;
           transition: background 0.2s;
           border-bottom: 1px solid #edf2f7;
@@ -266,22 +275,40 @@ const QuestionList = () => {
           text-align: center;
           color: #a0aec0;
           font-size: 1.1rem;
+          flex-grow: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
         
         .loader {
           padding: 2rem;
           text-align: center;
           color: #4a5568;
+          flex-grow: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
         
         @media (max-width: 768px) {
           .header {
-            flex-direction: column;
-            align-items: stretch;
+            flex-direction: row;
+            flex-wrap: wrap;
           }
           
           h1 {
-            margin-bottom: 1rem;
+            order: 1;
+            width: 100%;
+            margin: 1rem 0;
+          }
+          
+          .back-button {
+            order: 0;
+          }
+          
+          .add-button {
+            order: 2;
           }
           
           .table-header, .table-row {
@@ -293,11 +320,6 @@ const QuestionList = () => {
             grid-column: 1;
             justify-content: flex-start;
             margin-top: 1rem;
-          }
-          
-          .back-button, .add-button {
-            width: 100%;
-            justify-content: center;
           }
         }
       `}</style>

@@ -22,13 +22,11 @@ function QuizList() {
   }, []);
 
   const handleDeleteQuiz = (quizId) => {
-    if (window.confirm("Êtes-vous sûr de vouloir supprimer ce quiz ?")) {
       axios.delete(`http://localhost:3001/quiz/${quizId}`)
         .then(() => {
           setQuizzes(quizzes.filter(quiz => quiz._id !== quizId));
         })
         .catch(error => console.error("Erreur lors de la suppression", error));
-    }
   };
 
   return (
@@ -59,38 +57,40 @@ function QuizList() {
             <div className="header-cell actions">Actions</div>
           </div>
 
-          {quizzes.length > 0 ? (
-            quizzes.map((quiz) => (
-              <div className="table-row" key={quiz._id}>
-                <div className="table-cell">{quiz.title}</div>
-                <div className="table-cell description">{quiz.description}</div>
-                <div className="table-cell actions">
-                  <button 
-                    className="action-btn view"
-                    onClick={() => navigate(`/dashboardAdmin/quiz/${quiz._id}/questions`)}
-                  >
-                    <FaQuestionCircle className="icon" />
-                  </button>
-                  <button 
-                    className="action-btn edit"
-                    onClick={() => navigate(`/dashboardAdmin/quizzes/edit/${quiz._id}`)}
-                  >
-                    <FiEdit2 className="icon" />
-                  </button>
-                  <button 
-                    className="action-btn delete"
-                    onClick={() => handleDeleteQuiz(quiz._id)}
-                  >
-                    <FiTrash2 className="icon" />
-                  </button>
+          <div className="table-rows-container">
+            {quizzes.length > 0 ? (
+              quizzes.map((quiz) => (
+                <div className="table-row" key={quiz._id}>
+                  <div className="table-cell">{quiz.title}</div>
+                  <div className="table-cell description">{quiz.description}</div>
+                  <div className="table-cell actions">
+                    <button 
+                      className="action-btn view"
+                      onClick={() => navigate(`/dashboardAdmin/quiz/${quiz._id}/questions`)}
+                    >
+                      <FaQuestionCircle className="icon" />
+                    </button>
+                    <button 
+                      className="action-btn edit"
+                      onClick={() => navigate(`/dashboardAdmin/quizzes/edit/${quiz._id}`)}
+                    >
+                      <FiEdit2 className="icon" />
+                    </button>
+                    <button 
+                      className="action-btn delete"
+                      onClick={() => handleDeleteQuiz(quiz._id)}
+                    >
+                      <FiTrash2 className="icon" />
+                    </button>
+                  </div>
                 </div>
+              ))
+            ) : (
+              <div className="empty-state">
+                Aucun quiz disponible. Créez-en un nouveau !
               </div>
-            ))
-          ) : (
-            <div className="empty-state">
-              Aucun quiz disponible. Créez-en un nouveau !
-            </div>
-          )}
+            )}
+          </div>
         </div>
       )}
 
@@ -175,6 +175,7 @@ function QuizList() {
           font-weight: 600;
           color: #4a5568;
           border-bottom: 1px solid #e2e8f0;
+          flex-shrink: 0;
         }
         
         .table-rows-container {
