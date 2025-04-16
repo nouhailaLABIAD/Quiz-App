@@ -67,7 +67,7 @@ function QuizList() {
                 <div className="table-cell actions">
                   <button 
                     className="action-btn view"
-                    onClick={() => navigate(`/dashboardAdmin/quizzes/${quiz._id}/questions`)}
+                    onClick={() => navigate(`/dashboardAdmin/quiz/${quiz._id}/questions`)}
                   >
                     <FaQuestionCircle className="icon" />
                   </button>
